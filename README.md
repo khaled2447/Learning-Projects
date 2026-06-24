@@ -24,3 +24,14 @@ An interactive guitar ear training app built to help musicians develop note reco
 Everything in this project is hand-rolled — no UI component libraries, no game logic packages. The fretboard is a fully dynamic SVG-based layout that scales across screen sizes. The sigil artwork (the note buttons) was designed from scratch in Inkscape and integrated as React components via vite-plugin-svgr.
 
 The architecture separates game state (GameManager), layout (FretBoard), and UI controls (ToolBar) cleanly, with a custom hook handling note selection logic.
+
+
+# Memory card game
+
+<img width="521" height="444" alt="image" src="https://github.com/user-attachments/assets/f49fc42f-6cc6-4c7d-bcd1-e5808dc696ea" />
+
+Simple card game demonstrating useStates
+
+## Tech stack
+
+- React + Vite
