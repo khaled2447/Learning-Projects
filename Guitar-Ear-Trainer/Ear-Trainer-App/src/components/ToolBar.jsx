@@ -2,12 +2,14 @@ import { scales } from "../data/notes"
 import { notes } from "../data/notes"
 import { generatePattern } from "../data/gameLogic"
 import { playPattern } from "../data/gameLogic"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 
 export const ToolBar = ({ selectScale, selectRoot, setSelectedNotes, scaleNotes, selectedNotes, setWon, sigilSize }) => {
 
     const [played, setPlayed] = useState([])
     const [pattern, setPattern] = useState([])
+    const [isPlaying, setIsPlaying] = useState(false)
+    const isPlayingRef = useRef(false)
     const SelectedClean = Array.from({ length: selectedNotes.length }, (_, i) =>
         selectedNotes[i][1] === '#' ? selectedNotes[i].slice(0, 3) : selectedNotes[i].slice(0, 2)
     )
@@ -23,12 +25,12 @@ export const ToolBar = ({ selectScale, selectRoot, setSelectedNotes, scaleNotes,
         <>
             <div className="w-full bg-slate-900 flex items-center"
                 style={{ gap: s * 0.2, padding: `${s * 0.25}px ${s * 0.4}px` }}>
-                <button className="bg-slate-800 text-emerald-100"
+                <button disabled={isPlaying} className="bg-slate-800 text-emerald-100 disabled:opacity-50"
                     style={{ borderRadius: s * 0.1, padding: `${s * 0.1}px ${s * 0.2}px`, fontSize: s * 0.34, marginRight: s * 0.5 }}
-                    onClick={() => generatePattern(scaleNotes, setPlayed, setPattern, setSelectedNotes, setWon)}>New pattern</button>
-                <button className="bg-slate-800 text-emerald-100"
+                    onClick={() => generatePattern(scaleNotes, setPlayed, setPattern, setSelectedNotes, setWon, isPlayingRef, setIsPlaying)}>New pattern</button>
+                <button disabled={isPlaying} className="bg-slate-800 text-emerald-100 disabled:opacity-50"
                     style={{ borderRadius: s * 0.1, padding: `${s * 0.1}px ${s * 0.2}px`, fontSize: s * 0.34, marginRight: s * 0.5 }}
-                    onClick={() => playPattern(pattern, setPlayed)}>Listen again</button>
+                    onClick={() => playPattern(pattern, setPlayed, isPlayingRef, setIsPlaying)}>Listen again</button>
                 <select className="bg-slate-800 text-emerald-100"
                     style={{ borderRadius: s * 0.1, padding: `${s * 0.1}px ${s * 0.2}px`, fontSize: s * 0.34 }}
                     onChange={(e) => { selectRoot(e.target.value); setPattern([]) }}>
@@ -70,9 +72,9 @@ export const ToolBar = ({ selectScale, selectRoot, setSelectedNotes, scaleNotes,
                     style={{ borderRadius: s * 0.1, padding: `${s * 0.15}px ${s * 0.4}px`, fontSize: s * 0.28 }}>
                     Success!
                 </div>
-                <button className={`bg-slate-800 text-emerald-100 ${JSON.stringify(SelectedClean) === JSON.stringify(pattern) && pattern.length !== 0 ? 'visible' : 'invisible'}`}
+                <button disabled={isPlaying} className={`bg-slate-800 text-emerald-100 disabled:opacity-50 ${JSON.stringify(SelectedClean) === JSON.stringify(pattern) && pattern.length !== 0 ? 'visible' : 'invisible'}`}
                     style={{ borderRadius: s * 0.1, padding: `${s * 0.1}px ${s * 0.2}px`, fontSize: s * 0.22 }}
-                    onClick={() => generatePattern(scaleNotes, setPlayed, setPattern, setSelectedNotes, setWon)}>
+                    onClick={() => generatePattern(scaleNotes, setPlayed, setPattern, setSelectedNotes, setWon, isPlayingRef, setIsPlaying)}>
                     Click to play new pattern
                 </button>
             </div>
