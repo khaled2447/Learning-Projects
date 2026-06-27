@@ -1,19 +1,23 @@
-using Npgsql;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.EntityFrameworkCore;
+using Infrastructure.Postgres.Scaffolding;
+using Microsoft.AspNetCore.Http.Metadata;
+using Microsoft.AspNetCore.Mvc;
 
-// Load connection string from appsettings.json
-var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-string connString = config.GetConnectionString("NeonConnection");
+DotNetEnv.Env.Load("../efscaffold/.env");
 
-// Establish connection
-await using var conn = new NpgsqlConnection(connString);
-await conn.OpenAsync();
+var builder = WebApplication.CreateBuilder(args);
 
-// Execute a sample query
-await using var cmd = new NpgsqlCommand("SELECT version();", conn);
-await using var reader = await cmd.ExecuteReaderAsync();
-
-while (await reader.ReadAsync())
+builder.Services.AddDbContext<MyDbContext>(conf =>
 {
-    Console.WriteLine($"Connected to: {reader.GetString(0)}");
-}
+    conf.UseNpgsql(Environment.GetEnvironmentVariable("CONN_STR"));
+});
+
+var app = builder.Build(); 
+
+app.MapGet(pattern: "", ([FromServices]MyDbContext myDbContext) =>
+{
+    return myDbContext.Todos.ToList();
+});
+
+app.Run();
