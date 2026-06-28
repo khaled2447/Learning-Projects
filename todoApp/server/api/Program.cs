@@ -3,14 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using Infrastructure.Postgres.Scaffolding;
 using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.AspNetCore.Mvc;
-
-DotNetEnv.Env.Load("../efscaffold/.env");
+using api;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var appOptions = builder.Services.AddAppOptions(builder.Configuration);
+
 builder.Services.AddDbContext<MyDbContext>(conf =>
 {
-    conf.UseNpgsql(Environment.GetEnvironmentVariable("CONN_STR"));
+    conf.UseNpgsql(appOptions.DBConnectionString);
 });
 
 var app = builder.Build(); 
