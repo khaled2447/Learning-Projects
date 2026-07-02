@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Dockerfile" />
+  </Folder>
   <Project Path="api/api.csproj" />
   <Project Path="efscaffold/efscaffold.csproj" />
 </Solution>
