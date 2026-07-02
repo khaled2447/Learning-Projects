@@ -1,4 +1,4 @@
-# Lyre Trainer
+# Lyre Trainer https://genshin-guitar-ear-trainer.vercel.app/
 
 <img width="2559" height="1137" alt="Screenshot 2026-05-07 183438" src="https://github.com/user-attachments/assets/b699f002-e440-477c-89df-15a55866d3b0" />
 
