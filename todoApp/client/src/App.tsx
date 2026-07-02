@@ -9,6 +9,15 @@ function App() {
 
   return (
     <>
+    <button onClick={()=>{
+      fetch("https://learning-projects-production.up.railway.app/")
+      .then(Response=>{
+        console.log(Response)
+      })
+      .catch(e => {
+        console.log(e)
+      })
+    }}>CLICK ME</button>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
