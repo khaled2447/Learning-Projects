@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
+import { finalurl } from './baseUrl'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -10,7 +11,7 @@ function App() {
   return (
     <>
     <button onClick={()=>{
-      fetch("https://learning-projects-production.up.railway.app/")
+      fetch(finalurl)
       .then(Response=>{
         console.log(Response)
       })
