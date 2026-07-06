@@ -15,6 +15,9 @@ builder.Services.AddDbContext<MyDbContext>(conf =>
     conf.UseNpgsql(appOptions.DBConnectionString);
 });
 
+
+builder.Services.AddControllers();
+
 builder.Services.AddCors();
 
 var app = builder.Build();
@@ -25,9 +28,9 @@ app.UseCors(config => config
     .AllowAnyOrigin()
     .SetIsOriginAllowed(x => true));
 
-app.MapGet(pattern: "", ([FromServices]MyDbContext myDbContext) =>
-{
-    return myDbContext.Todos.ToList();
-});
+
+app.MapControllers();
+
+
 
 app.Run();
