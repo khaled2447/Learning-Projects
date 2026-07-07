@@ -4,6 +4,7 @@ using Infrastructure.Postgres.Scaffolding;
 using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.AspNetCore.Mvc;
 using api;
+using NSwag.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddCors();
 
+builder.Services.AddOpenApiDocument();
+
 var app = builder.Build();
 
 app.UseCors(config => config
@@ -31,6 +34,7 @@ app.UseCors(config => config
 
 app.MapControllers();
 
-
+app.UseOpenApi();
+app.UseSwaggerUi();
 
 app.Run();
