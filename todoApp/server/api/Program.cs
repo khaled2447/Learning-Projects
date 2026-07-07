@@ -34,7 +34,12 @@ app.UseCors(config => config
 
 app.MapControllers();
 
-app.UseOpenApi();
-app.UseSwaggerUi();
+if (app.Environment.IsDevelopment())
+{
+    app.UseOpenApi();
+    app.UseSwaggerUi();
+}
+
+
 
 app.Run();
